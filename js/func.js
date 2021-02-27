@@ -32,11 +32,13 @@ function getType(name) {
   var n = String(name).toUpperCase();
   return type[n];
 }
+
 /** 获得整数 */
 function getNumber(num) {
   return parseInt(num);
 }
 
+/** 获取当前时间 */
 function getDateTime() {
   var date = new Date();
 
@@ -55,10 +57,12 @@ function getDateTime() {
     "秒"
   );
 }
+
 /** 格式化数字 */
 function prefixInteger(num, length) {
   return (Array(length).join("0") + num).slice(-length);
 }
+
 /** 显示警告信息 */
 function showWarnning(text) {
   document.getElementById("main").innerHTML = [
@@ -74,19 +78,21 @@ function showWarnning(text) {
   ].join("");
 }
 
-/** 初始化数据 */
-function initData() {
-  type["XH"] = "车辆循环卡";
-  project[1] = "炼铁项目部";
-}
-
 /** 执行查询 */
 function query() {
   var request = GetRequest();
+  var c = request["c"];
 
-  var p = request["p"];
-  var t = request["t"] == undefined ? "XH" : String(request["t"]).toUpperCase(); //省略时默认为循环卡
-  var n = request["n"];
+  if (c != undefined && c.length == 7) {
+    var t = c.substr(0, 2).toUpperCase();
+    var p = c.substr(2, 2);
+    var n = c.substr(4, 3);
+  } else {
+    var t =
+      request["t"] == undefined ? "XH" : String(request["t"]).toUpperCase(); //省略时默认为循环卡
+    var p = request["p"];
+    var n = request["n"];
+  }
 
   if (p == undefined || n == undefined) {
     return showWarnning("查询数据无效!");
@@ -94,15 +100,21 @@ function query() {
 
   var project = getProject(p);
   var type = getType(t);
-  var num = t + "-" + prefixInteger(parseInt(p), 2) + prefixInteger(n, 3);
+  var code = t + "-" + prefixInteger(parseInt(p), 2) + prefixInteger(n, 3);
   if (project == undefined || type == undefined) {
     return showWarnning(
-      "未能查到车辆通行证<br><br>编号：" + num + "<br><br>请联系制证人员核对"
+      "未能查到车辆通行证<br><br>编号：" + code + "<br><br>请联系制证人员核对"
     );
   }
 
   document.getElementById("type").innerText = type;
   document.getElementById("project").innerText = project;
-  document.getElementById("num").innerText = num;
+  document.getElementById("num").innerText = code;
   document.getElementById("time").innerText = getDateTime().toString();
 }
+
+/** 初始化数据 */
+function initData() {
+	type["XH"] = "车辆循环卡";
+	project[1] = "炼铁项目部";
+  }
