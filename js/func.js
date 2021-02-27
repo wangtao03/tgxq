@@ -45,9 +45,9 @@ function getDateTime() {
   return (
     date.getFullYear() +
     "年" +
-    date.getMonth() +
+    (date.getMonth()+1) +
     "月" +
-    date.getDay() +
+    date.getDate() +
     "日 " +
     date.getHours() +
     "时" +
