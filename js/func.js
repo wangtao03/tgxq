@@ -116,5 +116,8 @@ function query() {
 /** 初始化数据 */
 function initData() {
 	type["XH"] = "车辆循环卡";
-	project[1] = "炼铁项目部";
+	project[1] = "动力事业部";
+	project[2] = "热轧事业部";
+	project[3] = "特钢事业部";
+	project[4] = "炼铁事业部";
   }
