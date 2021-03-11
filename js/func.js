@@ -120,4 +120,5 @@ function initData() {
 	project[2] = "热轧事业部";
 	project[3] = "特钢事业部";
 	project[4] = "炼铁事业部";
+	project[5] = project[3];
   }
